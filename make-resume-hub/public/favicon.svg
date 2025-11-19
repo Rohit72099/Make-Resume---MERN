@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MakeResume Logo">
+  <defs>
+    <linearGradient id="mrGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+    <linearGradient id="mrAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FACC15" />
+      <stop offset="100%" stop-color="#F97316" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#mrGradient)" />
+  <path d="M18 45V19h6l8 10 8-10h6v26h-6V32l-8 10-8-10v13h-6z" fill="white" opacity="0.95" />
+  <circle cx="48" cy="46" r="8" fill="white" opacity="0.15" />
+  <path d="M44 46h8" stroke="url(#mrAccent)" stroke-width="3" stroke-linecap="round" />
+  <path d="M48 42v8" stroke="url(#mrAccent)" stroke-width="3" stroke-linecap="round" />
+</svg>
+
