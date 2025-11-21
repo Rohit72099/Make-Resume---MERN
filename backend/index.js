@@ -22,11 +22,23 @@ connectDB();
 
 // Middlewares
 // Configure helmet but relax COOP/COEP so Google Sign-In popups/postMessage keep working
-app.use(helmet({
-  crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
-  crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: false
-}));
+// app.use(helmet({
+//   crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+//   crossOriginEmbedderPolicy: false,
+//   crossOriginResourcePolicy: false
+// }));
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false, 
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: false,
+  })
+);
+
+
+
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
@@ -35,15 +47,26 @@ app.use(morgan('dev'));
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Configure CORS with allowlist from env (comma-separated). If not set, allow all origins.
-const allowed = (process.env.ALLOWED_ORIGINS || '*').split(',').map(s => s.trim()).filter(Boolean);
-app.use(cors({
-  origin: function (origin, cb) {
-    if (!origin) return cb(null, true); // allow non-browser requests like curl, mobile apps
-    if (allowed.includes('*') || allowed.includes(origin)) return cb(null, true);
-    return cb(new Error('CORS_NOT_ALLOWED_BY_SERVER'));
-  },
-  credentials: true
-}));
+// const allowed = (process.env.ALLOWED_ORIGINS || '*').split(',').map(s => s.trim()).filter(Boolean);
+// app.use(cors({
+//   origin: function (origin, cb) {
+//     if (!origin) return cb(null, true); // allow non-browser requests like curl, mobile apps
+//     if (allowed.includes('*') || allowed.includes(origin)) return cb(null, true);
+//     return cb(new Error('CORS_NOT_ALLOWED_BY_SERVER'));
+//   },
+//   credentials: true
+// }));
+
+app.use(
+  cors({
+    origin: [
+      "https://make-resume-front.vercel.app",
+      "http://localhost:8080"
+    ],
+    credentials: true,
+  })
+);
+
 
 
 // Rate limiter for auth endpoints
@@ -61,8 +84,8 @@ app.get('/', (req, res) => res.send('Universal Resume Builder API'));
 // Error handler
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
 
 module.exports = app;
