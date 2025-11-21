@@ -14,6 +14,8 @@ const utilityRoutes = require('./routes/utilityRoutes');
 const { errorHandler } = require('./middlewares/errorHandler');
 
 const app = express();
+app.set("trust proxy", 1);
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -70,7 +72,15 @@ app.use(
 
 
 // Rate limiter for auth endpoints
-const authLimiter = rateLimit({ windowMs: 60 * 1000, max: 10 });
+// const authLimiter = rateLimit({ windowMs: 60 * 1000, max: 10 });
+const authLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+
 app.use('/api/auth', authLimiter);
 
 // Routes
